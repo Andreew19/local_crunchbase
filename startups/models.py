@@ -9,7 +9,6 @@ class Categories(models.Model):
   def __str__(self):
         return self.name
 
-
 class Articles(models.Model):
     title = models.CharField(max_length=256)
     description = models.TextField
@@ -19,5 +18,25 @@ class Articles(models.Model):
     type = models.CharField(max_length=256, blank=True, null=True)
     article_categories = models.ManyToManyField(Categories)
 
+class Startups(models.Model):
+  name = models.CharField(max_length=256)
+  description = models.TextField
+  url = models.TextField(null=True)
+  market = models.TextField
+  country = models.TextField
+  city = models.TextField
+  publicated_at = models.DateTimeField('date published')
+  updated_at = models.DateTimeField('date updated')
 
+class Tags(models.Model):
+  name = models.CharField(max_length=256)
+  publicated_at = models.DateTimeField('date published')
+  updated_at = models.DateTimeField('date updated')
+  tag_group_id = models.BigAutoField(null=True)
+  startups_tags = models.ManyToManyField(Startups)
 
+class TagGroups(models.Model):
+  name = models.CharField(max_length=256)
+  publicated_at = models.DateTimeField('date published')
+  updated_at = models.DateTimeField('date updated')
+  tag_group_id = models.ManyToManyField(Tags)
