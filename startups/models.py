@@ -18,7 +18,7 @@ class Articles(models.Model):
     title = models.CharField(max_length=256)
     description = models.TextField
     link = models.CharField(max_length=256, blank=True, null=True)
-    publicated_at = models.DateTimeField('date published')
+    publicated_at = models.DateTimeField(auto_now_add=True)
     creator = models.CharField(max_length=256)
     type = models.CharField(max_length=256, blank=True, null=True)
     processed = models.BooleanField(default=False)
@@ -26,6 +26,8 @@ class Articles(models.Model):
     class Meta:
       #Исправляет баг с "s" по умолчанию в конце слова
       verbose_name_plural = 'Articles'
+    def __str__(self):
+        return self.title
 
 class Startups(models.Model):
   name = models.CharField(max_length=256)
