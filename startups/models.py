@@ -1,4 +1,3 @@
-from tabnanny import verbose
 from django.db import models
 # Create your models here.
 
@@ -26,6 +25,7 @@ class Articles(models.Model):
     class Meta:
       #Исправляет баг с "s" по умолчанию в конце слова
       verbose_name_plural = 'Articles'
+      
     def __str__(self):
         return self.title
 

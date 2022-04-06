@@ -9,7 +9,7 @@ class CategoriesSerializing(serializers.ModelSerializer):
 class ArticlesSerializing(serializers.ModelSerializer):
   class Meta:
     model = Articles
-    fields = ('title', 'description', 'link', 'publicated_at', 'creator', 'type', 'article_categories',)
+    fields = ('title',)
 
 class StartupsSerializing(serializers.ModelSerializer):
     class Meta: 
