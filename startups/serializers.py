@@ -2,9 +2,9 @@ from rest_framework import serializers
 from .models import Categories, Articles, Startups, TagGroups, Tags
 
 class CategoriesSerializing(serializers.ModelSerializer):
-    class Meta: 
+    class Meta:
       model = Categories
-      fields = ('name',)
+      fields = ('name', 'id')
 
 class ArticlesSerializing(serializers.ModelSerializer):
   class Meta:
@@ -12,7 +12,7 @@ class ArticlesSerializing(serializers.ModelSerializer):
     fields = ('title',)
 
 class StartupsSerializing(serializers.ModelSerializer):
-    class Meta: 
+    class Meta:
       model = Startups
       fields = ('name', 'description', 'url', 'market', 'country', 'city', 'publicated_at', 'updated_at',)
 
