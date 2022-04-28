@@ -8,6 +8,7 @@ class CategoriesViewSet(viewsets.ModelViewSet):
   queryset = Categories.objects.all()
   serializer_class = CategoriesSerializing
 
+
 class ArticlesViewSet(viewsets.ModelViewSet):
   queryset = Articles.objects.all()
   serializer_class = ArticlesSerializing
@@ -23,3 +24,4 @@ class TagGroupsViewSet(viewsets.ModelViewSet):
 class TagsViewSet(viewsets.ModelViewSet):
   queryset = Tags.objects.all()
   serializer_class = TagsSerializing
+
