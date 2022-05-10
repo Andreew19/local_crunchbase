@@ -4,7 +4,7 @@ from django.db import models
 
 
 class Categories(models.Model):
-  name = models.CharField(max_length=256)
+  name = models.CharField(max_length=256, unique=True)
   created_at = models.DateTimeField(auto_now_add=True)
   class Meta:
       #Исправляет баг с "s" по умолчанию в конце слова
@@ -25,7 +25,7 @@ class Articles(models.Model):
     class Meta:
       #Исправляет баг с "s" по умолчанию в конце слова
       verbose_name_plural = 'Articles'
-      
+
     def __str__(self):
         return self.title
 
@@ -61,3 +61,8 @@ class Tags(models.Model):
     #Исправляет баг с "s" по умолчанию в конце слова
     verbose_name_plural = 'Tags'
 
+class Founds(models.Model):
+  amount = models.IntegerField()
+  startup = models.ForeignKey(Startups, on_delete=models.CASCADE)
+  currency = models.CharField(max_length=3)
+  approoved = models.BooleanField(default=False)
