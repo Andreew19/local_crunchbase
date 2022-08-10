@@ -66,3 +66,4 @@ class Founds(models.Model):
   startup = models.ForeignKey(Startups, on_delete=models.CASCADE)
   currency = models.CharField(max_length=3)
   approoved = models.BooleanField(default=False)
+  publicated_at = models.DateTimeField('date published')

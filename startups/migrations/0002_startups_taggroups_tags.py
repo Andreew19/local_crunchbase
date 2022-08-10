@@ -18,6 +18,7 @@ class Migration(migrations.Migration):
                 ('url', models.TextField()),
                 ('publicated_at', models.DateTimeField(verbose_name='date published')),
                 ('updated_at', models.DateTimeField(verbose_name='date updated')),
+                ('description', models.TextField(blank=True, null=True)),
             ],
         ),
         migrations.CreateModel(

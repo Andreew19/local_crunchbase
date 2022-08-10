@@ -29,6 +29,7 @@ class Migration(migrations.Migration):
                 ('creator', models.CharField(max_length=256)),
                 ('type', models.CharField(blank=True, max_length=256, null=True)),
                 ('article_categories', models.ManyToManyField(to='startups.Categories')),
+                ('description', models.TextField(blank=True, null=True)),
             ],
         ),
     ]
