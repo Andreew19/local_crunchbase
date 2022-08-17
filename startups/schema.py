@@ -2,7 +2,7 @@ import graphene
 from graphene_django import DjangoObjectType
 from graphene_django.filter import DjangoFilterConnectionField
 
-from startups.models import Startups, Categories, Articles
+from startups.models import Startups, Categories, Articles, Founds
 
 class CountableConnectionBase(graphene.relay.Connection):
   class Meta:
@@ -13,15 +13,25 @@ class CountableConnectionBase(graphene.relay.Connection):
   def resolve_total_count(self, info, **kwargs):
     return self.iterable.count()
 
+class FoundType(DjangoObjectType):
+  class Meta:
+    model = Founds
+    fields = ("id", "amount", "currency", "publicated_at")
+
 class StartupType(DjangoObjectType):
   class Meta:
     model = Startups
-    fields = ("id", "name", "url")
+    fields = ("id", "name", "url", "description")
     interfaces = (graphene.relay.Node,)
     filter_fields = {
       'name': ['exact']
     }
     connection_class = CountableConnectionBase
+
+  founds = graphene.List(FoundType)
+
+  def resolve_founds(self, info):
+    return self.founds_set.all()
 
 class CategoryType(DjangoObjectType):
   class Meta:
