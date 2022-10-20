@@ -3,3 +3,5 @@ djangorestframework==3.13.1
 django-cors-headers==3.13.0
 graphene_django==2.15.0
 django-filter==22.1
+coverage==6.4.4
+gunicorn==20.1.0
