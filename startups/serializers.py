@@ -1,15 +1,17 @@
 from rest_framework import serializers
 from .models import Categories, Articles, Startups, TagGroups, Tags
 
-class CategoriesSerializing(serializers.ModelSerializer):
+class CategorySerializer(serializers.ModelSerializer):
     class Meta:
       model = Categories
       fields = ('name', 'id')
 
-class ArticlesSerializing(serializers.ModelSerializer):
+class ArticleSerializer(serializers.ModelSerializer):
+  article_categories = CategorySerializer(read_only=True, many=True)
+
   class Meta:
     model = Articles
-    fields = ('title',)
+    fields = ('id', 'title', 'article_categories', 'link', 'publicated_at')
 
 class StartupsSerializing(serializers.ModelSerializer):
     class Meta:
