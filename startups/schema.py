@@ -1,6 +1,8 @@
 import graphene
+import graphql_jwt
 from graphene_django import DjangoObjectType
 from graphene_django.filter import DjangoFilterConnectionField
+from django.contrib.auth import get_user_model
 
 from startups.models import Startups, Categories, Articles, Founds
 
@@ -12,6 +14,10 @@ class CountableConnectionBase(graphene.relay.Connection):
 
   def resolve_total_count(self, info, **kwargs):
     return self.iterable.count()
+
+class UserType(DjangoObjectType):
+    class Meta:
+        model = get_user_model()
 
 class FoundType(DjangoObjectType):
   class Meta:
@@ -57,8 +63,21 @@ class Query(graphene.ObjectType):
     startups = DjangoFilterConnectionField(StartupType)
     categories = graphene.List(CategoryType)
     articles = DjangoFilterConnectionField(ArticleNode)
+    me = graphene.Field(UserType)
 
     def resolve_categories(root, info):
       return Categories.objects.all()
 
-schema = graphene.Schema(query=Query)
+    def resolve_me(self, info):
+        user = info.context.user
+        if user.is_anonymous:
+            raise Exception('Not logged in!')
+
+        return user
+
+class Mutation(graphene.ObjectType):
+    token_auth = graphql_jwt.ObtainJSONWebToken.Field()
+    verify_token = graphql_jwt.Verify.Field()
+    refresh_token = graphql_jwt.Refresh.Field()
+
+schema = graphene.Schema(query=Query, mutation=Mutation)
