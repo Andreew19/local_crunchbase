@@ -5,3 +5,4 @@ startups.csv
 articles.csv
 .coverage
 .DS_Store
+.env

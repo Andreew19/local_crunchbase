@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import environ
+
+env = environ.Env()
+environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,7 +29,7 @@ SECRET_KEY = 'django-insecure-!b#*1slq3%4j0qr(e%2s&rdup*%km53f!!x6%!^f4omc1@6jg6
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = env('SERVERNAMES').split(',')
 
 
 # Application definition
@@ -136,9 +140,7 @@ GRAPHENE = {
     ],
 }
 
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:8080',
-]
+CORS_ALLOWED_ORIGINS = env('SERVERNAMES').split(',')
 
 AUTHENTICATION_BACKENDS = [
     "graphql_jwt.backends.JSONWebTokenBackend",
