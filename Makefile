@@ -3,7 +3,7 @@
 default: install
 
 serve:
-	docker run --restart=always -d --net=host local-crunchbase gunicorn -w 4 local_crunchbase.wsgi
+	docker run --restart=always -d --net=host local-crunchbase gunicorn -b 0.0.0.0:8000 -w 2 local_crunchbase.wsgi
 
 install:
 	pip3 install -r requirements.txt
