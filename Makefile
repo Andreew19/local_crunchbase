@@ -9,7 +9,7 @@ install:
 	pip3 install -r requirements.txt
 
 test:
-	pytest --cov=.
+	DJANGO_SETTINGS_MODULE=local_crunchbase.settings pytest --cov=.
 
 build:
 	docker build -t local-crunchbase .

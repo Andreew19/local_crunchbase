@@ -39,6 +39,13 @@ class StartupType(DjangoObjectType):
   def resolve_founds(self, info):
     return self.founds_set.all()
 
+  @classmethod
+  def get_queryset(cls, queryset, info):
+    if info.context.user.is_authenticated:
+      return queryset
+
+    return queryset.none()
+
 class CategoryType(DjangoObjectType):
   class Meta:
     model = Categories
@@ -55,7 +62,8 @@ class ArticleNode(DjangoObjectType):
     fields = ("id", "title", "link", "processed", "article_categories")
     interfaces = (graphene.relay.Node,)
     filter_fields = {
-      'title': ['exact']
+      'title': ['exact'],
+      'article_categories__name': ['in']
     }
     connection_class = CountableConnectionBase
 
@@ -74,6 +82,12 @@ class Query(graphene.ObjectType):
             raise Exception('Not logged in!')
 
         return user
+
+    # def resolve_startups(root, info):
+    #   if not info.context.user.is_authenticated:
+    #     return Articles.objects.none()
+    #   else:
+    #     return Articles.objects.all()
 
 class Mutation(graphene.ObjectType):
     token_auth = graphql_jwt.ObtainJSONWebToken.Field()
